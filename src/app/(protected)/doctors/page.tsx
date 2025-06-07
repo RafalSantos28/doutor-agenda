@@ -1,8 +1,6 @@
-import { PlusIcon } from "lucide-react";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { Button } from "@/components/ui/button";
 import {
   PageContainer,
   PageContent,
@@ -13,6 +11,8 @@ import {
 } from "@/components/ui/page-container";
 import { PageHeader } from "@/components/ui/page-container";
 import { auth } from "@/lib/auth";
+
+import AddDoctorButton from "./_components/add-doctor-button";
 
 const DoctorsPage = async () => {
   const session = await auth.api.getSession({
@@ -36,10 +36,7 @@ const DoctorsPage = async () => {
           </PageHeaderDescription>
         </PageHeaderContent>
         <PageHeaderActions>
-          <Button>
-            <PlusIcon className="h-4 w-4" />
-            Adicionar médico
-          </Button>
+          <AddDoctorButton />
         </PageHeaderActions>
       </PageHeader>
       <PageContent>

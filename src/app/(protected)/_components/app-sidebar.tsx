@@ -113,7 +113,7 @@ export function AppSidebar() {
                       {session.data?.user?.clinic?.name}
                     </p>
                     <p className="text-muted-foreground text-xs">
-                      {session.data?.user.email}
+                      {session.data?.user?.email}
                     </p>
                   </div>
                 </SidebarMenuButton>

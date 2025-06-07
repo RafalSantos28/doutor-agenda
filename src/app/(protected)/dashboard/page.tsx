@@ -1,10 +1,14 @@
-import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
+import {
+  PageContainer,
+  PageContent,
+  PageHeader,
+  PageHeaderContent,
+  PageTitle,
+} from "@/components/ui/page-container";
 import { auth } from "@/lib/auth";
-
-import SignOutButton from "./_components/sign-out-button";
 
 const DashboardPage = async () => {
   const session = await auth.api.getSession({
@@ -19,12 +23,16 @@ const DashboardPage = async () => {
   }
 
   return (
-    <div className="flex h-full flex-col items-start justify-center">
-      <h1 className="text-2xl font-bold">Parabéns, você está logado!</h1>
-      <p className="text-muted-foreground text-sm">{session?.user?.name}</p>
-      <p className="text-muted-foreground text-sm">{session?.user?.email}</p>
-      <SignOutButton />
-    </div>
+    <PageContainer>
+      <PageHeader>
+        <PageHeaderContent>
+          <PageTitle>Dashboard</PageTitle>
+        </PageHeaderContent>
+      </PageHeader>
+      <PageContent>
+        <h1>Dashboard</h1>
+      </PageContent>
+    </PageContainer>
   );
 };
 
