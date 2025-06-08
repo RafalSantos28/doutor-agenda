@@ -2,6 +2,7 @@
 
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 
 import { db } from "@/db";
@@ -16,18 +17,18 @@ dayjs.extend(utc);
 export const upsertDoctor = actionClient
   .schema(upsertDoctorSchema)
   .action(async ({ parsedInput }) => {
-    const availableFromWeekDay = parsedInput.availableFromWeekDay;
-    const availableToWeekDay = parsedInput.availableToWeekDay;
+    const availableFromTime = parsedInput.availableFromTime;
+    const availableToTime = parsedInput.availableToTime;
 
     const availableFromTimeUTC = dayjs()
-      .set("hour", parseInt(parsedInput.availableFromTime.split(":")[0]))
-      .set("minute", parseInt(parsedInput.availableFromTime.split(":")[1]))
+      .set("hour", parseInt(availableFromTime.split(":")[0]))
+      .set("minute", parseInt(availableFromTime.split(":")[1]))
       .utc()
       .toDate();
 
     const availableToTimeUTC = dayjs()
-      .set("hour", parseInt(parsedInput.availableToTime.split(":")[0]))
-      .set("minute", parseInt(parsedInput.availableToTime.split(":")[1]))
+      .set("hour", parseInt(availableToTime.split(":")[0]))
+      .set("minute", parseInt(availableToTime.split(":")[1]))
       .utc()
       .toDate();
 
@@ -57,4 +58,6 @@ export const upsertDoctor = actionClient
           availableToTime: availableToTimeUTC.format("HH:mm"),
         },
       });
+
+    revalidatePath("/doctors");
   });
