@@ -22,7 +22,7 @@ const DoctorsPage = async () => {
     redirect("/authentication");
   }
 
-  if (!session.user.clinic) {
+  if (!session.user.clinic?.id) {
     redirect("/clinic-form");
   }
 
